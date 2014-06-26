@@ -1,5 +1,8 @@
 Revision history for Mojolicious-Plugin-JSONRPC2
 
+1.0.1   Thu Jun 26 10:03:24 EEST 2014
+	Require Mojolicious-5.0 for secrets().
+
 1.0.0	Fri Jun 20 11:02:36 EEST 2014
 	Initial release.
 
