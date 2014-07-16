@@ -43,7 +43,7 @@
    "provides" : {
       "Mojolicious::Plugin::JSONRPC2" : {
          "file" : "lib/Mojolicious/Plugin/JSONRPC2.pm",
-         "version" : "v1.0.1"
+         "version" : "v1.1.0"
       }
    },
    "release_status" : "stable",
@@ -52,5 +52,5 @@
          "http://www.opensource.org/licenses/mit-license.php"
       ]
    },
-   "version" : "v1.0.1"
+   "version" : "v1.1.0"
 }

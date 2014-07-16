@@ -6,7 +6,7 @@ use utf8;
 use feature ':5.10';
 use Carp;
 
-use version; our $VERSION = qv('1.0.1');    # REMINDER: update Changes
+use version; our $VERSION = qv('1.1.0');    # REMINDER: update Changes
 
 # REMINDER: update dependencies in Build.PL
 use Mojo::Base 'Mojolicious::Plugin';
@@ -14,6 +14,7 @@ use JSON::XS;
 # to ensure callback runs on notification
 use JSON::RPC2::Server 0.4.0;   ## no critic (ProhibitVersionStrings)
 
+use constant TIMEOUT    => 5*60;    # sec
 use constant HTTP_200   => 200;
 use constant HTTP_204   => 204;
 use constant HTTP_415   => 415;
@@ -55,6 +56,9 @@ sub _srv {
 
     $c->res->headers->content_type($Type);
     $c->render_later;
+
+    my $timeout = $c->stash('jsonrpc2.timeout') || TIMEOUT;
+    Mojo::IOLoop->stream($c->tx->connection)->timeout($timeout);
 
     my $request;
     if ($c->req->method eq 'GET') {
@@ -112,6 +116,10 @@ The "pipelined Requests/Responses" is not supported yet.
 =head1 INTERFACE
 
 =over
+
+=item $app->defaults( 'jsonrpc2.timeout' => 300 )
+
+Configure timeout for RPC requests in seconds (default value 5 minutes).
 
 =item $r->jsonrpc2($path, $server)
 

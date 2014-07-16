@@ -11,14 +11,20 @@ plugin 'JSONRPC2';
 
 my $server_full = JSON::RPC2::Server->new();
 my $server_safe = JSON::RPC2::Server->new();
+my $server_slow = JSON::RPC2::Server->new();
 $server_full->register('method', sub { return 'full' });
 $server_safe->register('method', sub { return 'safe' });
+$server_slow->register_nb('method', sub {
+    my $cb = shift;
+    Mojo::IOLoop->timer(0.5 => sub { $cb->('slow') });
+});
 
 my $r = app->routes;
 $r->jsonrpc2('/', $server_full);
 $r->jsonrpc2_get('/safe', $server_safe)->over(headers => { app->jsonrpc2_headers });
 $r->jsonrpc2_get('/only', $server_safe);
 $r->jsonrpc2('/only', $server_full);
+$r->jsonrpc2('/slow', $server_slow);
 $r->get('/',        {text=>'Full API'});
 $r->get('/safe',    {text=>'Safe API'});
 $r->get('/only',    {text=>'Only Safe API'});
@@ -119,6 +125,15 @@ $t->post_ok('/', \%headers, $body2)
     ->status_is(204)
     ->content_type_is('application/json')
     ->content_is(q{});
+
+# * timeout
+$t->post_ok('/slow', \%headers, $body)
+    ->status_is(200)
+    ->content_type_is('application/json')
+    ->json_is('/result' => 'slow');
+app->defaults('jsonrpc2.timeout' => 0.1);
+my $tx = $t->ua->post('/slow', \%headers, $body);
+is $tx->error->{message}, 'Premature connection close', 'timeout';
 
 done_testing();
 # app->start('routes','-v');
