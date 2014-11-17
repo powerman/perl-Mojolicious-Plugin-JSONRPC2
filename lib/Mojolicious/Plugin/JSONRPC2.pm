@@ -6,7 +6,7 @@ use utf8;
 use feature ':5.10';
 use Carp;
 
-use version; our $VERSION = qv('1.1.0');    # REMINDER: update Changes
+use version; our $VERSION = qv('1.1.1');    # REMINDER: update Changes
 
 # REMINDER: update dependencies in Build.PL
 use Mojo::Base 'Mojolicious::Plugin';
@@ -58,7 +58,7 @@ sub _srv {
     $c->render_later;
 
     my $timeout = $c->stash('jsonrpc2.timeout') || TIMEOUT;
-    Mojo::IOLoop->stream($c->tx->connection)->timeout($timeout);
+    $c->inactivity_timeout($timeout);
 
     my $request;
     if ($c->req->method eq 'GET') {
