@@ -1,5 +1,8 @@
 Revision history for Mojolicious-Plugin-JSONRPC2
 
+1.1.2   Wed Dec 24 11:57:32 EET 2014
+	Fix dependencies.
+
 1.1.1   Tue Nov 18 01:20:02 EET 2014
 	Set timeout only when possible, without any errors.
 

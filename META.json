@@ -16,7 +16,7 @@
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "Module::Build" : "0"
+            "Module::Build" : "0.4004"
          }
       },
       "runtime" : {
@@ -43,7 +43,7 @@
    "provides" : {
       "Mojolicious::Plugin::JSONRPC2" : {
          "file" : "lib/Mojolicious/Plugin/JSONRPC2.pm",
-         "version" : "v1.1.1"
+         "version" : "v1.1.2"
       }
    },
    "release_status" : "stable",
@@ -52,5 +52,5 @@
          "http://www.opensource.org/licenses/mit-license.php"
       ]
    },
-   "version" : "v1.1.1"
+   "version" : "v1.1.2"
 }
