@@ -1,6 +1,8 @@
 Revision history for Mojolicious-Plugin-JSONRPC2
 
 {{$NEXT}}
+
+v2.0.0  2016-02-19 08:38:33 EET
 	- Switch to Dist::Milla.
 
 1.1.2   2014-12-24 11:57:32 EET
