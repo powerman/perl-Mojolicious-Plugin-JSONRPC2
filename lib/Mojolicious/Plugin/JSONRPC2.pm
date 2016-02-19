@@ -1,18 +1,13 @@
 package Mojolicious::Plugin::JSONRPC2;
 
-use warnings;
-use strict;
-use utf8;
-use feature ':5.10';
+use Mojo::Base 'Mojolicious::Plugin';
 use Carp;
 
-use version; our $VERSION = qv('1.1.2');    # REMINDER: update Changes
+our $VERSION = 'v1.1.2';
 
-# REMINDER: update dependencies in Build.PL
-use Mojo::Base 'Mojolicious::Plugin';
 use JSON::XS;
 # to ensure callback runs on notification
-use JSON::RPC2::Server 0.4.0;   ## no critic (ProhibitVersionStrings)
+use JSON::RPC2::Server 0.004000;
 
 use constant TIMEOUT    => 5*60;    # sec
 use constant HTTP_200   => 200;
@@ -87,7 +82,12 @@ __END__
 
 =head1 NAME
 
-Mojolicious::Plugin::JSONRPC2 - JSON RPC 2.0 over HTTP
+Mojolicious::Plugin::JSONRPC2 - JSON-RPC 2.0 over HTTP
+
+
+=head1 VERSION
+
+This document describes Mojolicious::Plugin::JSONRPC2 version v1.1.2
 
 
 =head1 SYNOPSIS
@@ -108,7 +108,7 @@ Mojolicious::Plugin::JSONRPC2 - JSON RPC 2.0 over HTTP
 =head1 DESCRIPTION
 
 L<Mojolicious::Plugin::JSONRPC2> is a plugin that allow you to handle
-some routes in L<Mojolicious> app using JSON RPC 2.0 over HTTP protocol.
+some routes in L<Mojolicious> app using JSON-RPC 2.0 over HTTP protocol.
 
 Implements this spec: L<http://www.simple-is-better.org/json-rpc/transport_http.html>.
 The "pipelined Requests/Responses" is not supported yet.
@@ -123,7 +123,7 @@ Configure timeout for RPC requests in seconds (default value 5 minutes).
 
 =item $r->jsonrpc2($path, $server)
 
-Add handler for JSON RPC 2.0 over HTTP protocol on C<$path>
+Add handler for JSON-RPC 2.0 over HTTP protocol on C<$path>
 (with C<< format=>0 >>) using C<POST> method.
 
 RPC functions registered with C<$server> will be called only with their
@@ -138,7 +138,7 @@ have to use different C<$server> objects for C<POST> and C<GET> because
 using C<GET> you can provide only B<safe and idempotent> RPC functions
 (because of C<GET> semantic, caching/proxies, etc.).
 
-Add handler for JSON RPC 2.0 over HTTP protocol on C<$path>
+Add handler for JSON-RPC 2.0 over HTTP protocol on C<$path>
 (with C<< format=>0 >>) using C<GET> method.
 
 RPC functions registered with C<$server_safe_idempotent> will be called only with their
@@ -148,7 +148,7 @@ closures).
 
 =item $r->over(headers => { $app->jsonrpc2_headers })
 
-You can use this condition to distinguish between JSON RPC 2.0 and other
+You can use this condition to distinguish between JSON-RPC 2.0 and other
 request types on same C<$path> - for example if you want to serve web page
 and RPC on same url you can do this:
 
@@ -184,71 +184,64 @@ Register hooks in L<Mojolicious> application.
 L<JSON::RPC2::Server>, L<Mojolicious>, L<MojoX::JSONRPC2::HTTP>.
 
 
-=head1 BUGS AND LIMITATIONS
-
-No bugs have been reported.
-
-
 =head1 SUPPORT
 
-Please report any bugs or feature requests through the web interface at
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Mojolicious-Plugin-JSONRPC2>.
-I will be notified, and then you'll automatically be notified of progress
-on your bug as I make changes.
+=head2 Bugs / Feature Requests
 
-You can also look for information at:
+Please report any bugs or feature requests through the issue tracker
+at L<https://github.com/powerman/perl-Mojolicious-Plugin-JSONRPC2/issues>.
+You will be notified automatically of any progress on your issue.
+
+=head2 Source Code
+
+This is open source software. The code repository is available for
+public review and contribution under the terms of the license.
+Feel free to fork the repository and submit pull requests.
+
+L<https://github.com/powerman/perl-Mojolicious-Plugin-JSONRPC2>
+
+    git clone https://github.com/powerman/perl-Mojolicious-Plugin-JSONRPC2.git
+
+=head2 Resources
 
 =over
 
-=item * RT: CPAN's request tracker
+=item * MetaCPAN Search
 
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Mojolicious-Plugin-JSONRPC2>
+L<https://metacpan.org/search?q=Mojolicious-Plugin-JSONRPC2>
+
+=item * CPAN Ratings
+
+L<http://cpanratings.perl.org/dist/Mojolicious-Plugin-JSONRPC2>
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
 L<http://annocpan.org/dist/Mojolicious-Plugin-JSONRPC2>
 
-=item * CPAN Ratings
+=item * CPAN Testers Matrix
 
-L<http://cpanratings.perl.org/d/Mojolicious-Plugin-JSONRPC2>
+L<http://matrix.cpantesters.org/?dist=Mojolicious-Plugin-JSONRPC2>
 
-=item * Search CPAN
+=item * CPANTS: A CPAN Testing Service (Kwalitee)
 
-L<http://search.cpan.org/dist/Mojolicious-Plugin-JSONRPC2/>
+L<http://cpants.cpanauthors.org/dist/Mojolicious-Plugin-JSONRPC2>
 
 =back
 
 
 =head1 AUTHOR
 
-Alex Efros  C<< <powerman@cpan.org> >>
+Alex Efros E<lt>powerman@cpan.orgE<gt>
 
 
-=head1 LICENSE AND COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
 
-Copyright 2014 Alex Efros <powerman@cpan.org>.
+This software is Copyright (c) 2014 by Alex Efros E<lt>powerman@cpan.orgE<gt>.
 
-This program is distributed under the MIT (X11) License:
-L<http://www.opensource.org/licenses/mit-license.php>
+This is free software, licensed under:
 
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
+  The MIT (X11) License
 
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
+=cut
 

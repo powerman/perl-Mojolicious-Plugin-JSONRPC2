@@ -1,0 +1,8 @@
+/Mojolicious-Plugin-JSONRPC2-*
+/.build
+/_build*
+/Build
+MYMETA.*
+!META.json
+/.prove
+/tmp/
