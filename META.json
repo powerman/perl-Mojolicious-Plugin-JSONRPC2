@@ -76,6 +76,6 @@
       }
    },
    "version" : "v2.0.1",
-   "x_serialization_backend" : "JSON::XS version 3.04"
+   "x_serialization_backend" : "JSON::XS version 4.02"
 }
 
