@@ -7,7 +7,7 @@ Mojolicious::Plugin::JSONRPC2 - JSON-RPC 2.0 over HTTP
 
 # VERSION
 
-This document describes Mojolicious::Plugin::JSONRPC2 version v2.0.2
+This document describes Mojolicious::Plugin::JSONRPC2 version v2.0.3
 
 # SYNOPSIS
 
